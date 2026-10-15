@@ -1,0 +1,9 @@
+{
+  "schema": "annotation-dataset-v1",
+  "items": [
+    {"id":"A1","statement":"Unauthenticated callers may submit nonempty payloads.","annotation":"SUPPORT","source":{"owner":"ehsandto","repo":"annotation-audit-conveyor","commit":"dbd87dad64020dc3421fd6b92952e6f761828881","path":"examples/ingestion-reference.txt","sha256":"998b6f1cd4ae769b4f18a5296d2867c83d964deb662b121bf3fdffa8d590f891"}},
+    {"id":"A2","statement":"Empty payloads are rejected even from authenticated callers.","annotation":"SUPPORT","source":{"owner":"ehsandto","repo":"annotation-audit-conveyor","commit":"dbd87dad64020dc3421fd6b92952e6f761828881","path":"examples/ingestion-reference.txt","sha256":"998b6f1cd4ae769b4f18a5296d2867c83d964deb662b121bf3fdffa8d590f891"}},
+    {"id":"A3","statement":"Successful submissions return HTTP status 202 Accepted.","annotation":"SUPPORT","source":{"owner":"ehsandto","repo":"annotation-audit-conveyor","commit":"dbd87dad64020dc3421fd6b92952e6f761828881","path":"examples/ingestion-reference.txt","sha256":"998b6f1cd4ae769b4f18a5296d2867c83d964deb662b121bf3fdffa8d590f891"}},
+    {"id":"A4","statement":"Successful submissions return HTTP status 200.","annotation":"REFUTE","source":{"owner":"ehsandto","repo":"annotation-audit-conveyor","commit":"dbd87dad64020dc3421fd6b92952e6f761828881","path":"examples/ingestion-reference.txt","sha256":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}}
+  ]
+}
