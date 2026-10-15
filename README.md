@@ -2,6 +2,8 @@
 
 A permissionless, complete-coverage audit of a bounded published annotation dataset. Validators independently fetch the evidence behind every annotation, audit rows in mandatory batches, and maintain exact conservative error bounds including unresolved and unfinished items.
 
+Live StudioNet: [`0xeACeD0F3067c02c545913c4658F61910544485B8`](https://explorer-studio.genlayer.com/address/0xeACeD0F3067c02c545913c4658F61910544485B8). [Seven finalized proofs](LIVE_PROOFS.md): four successful executions and three expected rejections. [Ready-to-fill submission](SUBMISSION.md).
+
 Experimental GenLayer infrastructure. Not a truth oracle, approval certificate, service-delivery verifier, agent-alignment judge, financial score, graph engine or policy compiler.
 
 ## Problem and consensus boundary
@@ -68,7 +70,7 @@ For total `N`, observed mismatches `E`, unresolved `U` and pending `P`:
 
 `error lower = E / N`; `error upper = (E + U + P) / N`.
 
-These are **logical ranges for document-consistency error counts**, not statistical confidence intervals or claims about universal truth. Integer numerator/denominator pairs avoid rounding across thresholds. Conservation requires `MATCH + MISMATCH + UNRESOLVED + pending = N`. Unavailable or unaudited rows never disappear from the denominator.
+These are **logical ranges for document-consistency error counts**, not statistical confidence intervals or claims about universal truth. They assume known consensus judgments are correct; shared model errors are not included in the range. Integer numerator/denominator pairs avoid rounding across thresholds. Conservation requires `MATCH + MISMATCH + UNRESOLVED + pending = N`. Unavailable or unaudited rows never disappear from the denominator.
 
 The lower bound cannot decrease; the upper bound cannot increase as rows are audited. With no unresolved/pending items, the bounds coincide. Coverage applies only to this frozen manifest, not an unseen external dataset or provider's full population.
 
@@ -89,7 +91,7 @@ npm ci --ignore-scripts
 npm run test:sdk
 ```
 
-36 tests cover permissionless coverage, exact bounds, stale/replayed/skipped cursors, head binding, cross-run separation, invalid manifest/source paths/labels/duplicates, incomplete evidence, odd final batches, malformed model output, withheld annotations, post-consensus tampering and the actual validator callback. Bounds are checked exhaustively over 4,844 conserved states for dataset sizes 1–16. Direct mocks/callback tests are not distributed consensus proofs. The narrow Windows fixture defers only gltest's open-tempfile unlink issue.
+38 tests cover permissionless coverage, exact bounds, stale/replayed/skipped cursors, head binding, cross-run separation, invalid manifest/source paths/labels/duplicates, incomplete evidence, odd final batches, malformed model output, withheld annotations, post-consensus tampering, maximum-size unavailable datasets and the actual validator callback. Bounds are checked exhaustively over 4,844 conserved states for dataset sizes 1–16. Direct mocks/callback tests are not distributed consensus proofs. The narrow Windows fixture defers only gltest's open-tempfile unlink issue.
 
 ## Deploy and interact
 

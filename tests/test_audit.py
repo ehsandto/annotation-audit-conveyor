@@ -203,3 +203,29 @@ def test_actual_independent_validator_rejects_substantive_changes():
                    {'entries':[{'index':0,'observation':'REFUTE','source':{'body':'fake'}}]}]:
         assert not ns['validator'](Return(dict(expected,**change)))
     assert not ns['validator'](object())
+
+
+def test_failed_evidence_cannot_be_promoted_after_consensus(audit,direct_vm,monkeypatch):
+    from genlayer import gl
+    rid=start(audit,direct_vm)
+    step(audit,direct_vm,rid,0,[(0,'REFUTE'),(1,'SUPPORT')])
+    original=gl.vm.run_nondet_unsafe
+    def forged(observe,validator):
+        report=json.loads(json.dumps(original(observe,validator)))
+        report['entries'][1]['observation']='REFUTE'  # Would match A4, but its hash failed.
+        return report
+    monkeypatch.setattr(gl.vm,'run_nondet_unsafe',forged)
+    with direct_vm.expect_revert('Invalid audit report'):step(audit,direct_vm,rid,2,[(2,'SUPPORT')])
+    assert audit.get_run(rid)['cursor']==2
+
+
+def test_maximum_dataset_all_unavailable_never_claims_quality(audit,direct_vm):
+    obj=json.loads(DATA)
+    obj['items']=[dict(obj['items'][0],id='item'+str(i),statement='A distinct hypothetical statement number '+str(i)+'.') for i in range(16)]
+    rid=start(audit,direct_vm,body=json.dumps(obj).encode())
+    for cursor in range(0,16,2):step(audit,direct_vm,rid,cursor,http=503)
+    run=audit.get_run(rid)
+    assert run['status']=='COMPLETE' and run['counts']=={'MATCH':0,'MISMATCH':0,'UNRESOLVED':16}
+    summary=audit.summary(rid,run['head'])
+    assert summary['error_lower']=={'numerator':0,'denominator':16}
+    assert summary['error_upper']=={'numerator':16,'denominator':16}
