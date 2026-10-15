@@ -1,0 +1,13 @@
+.env
+.env.*
+*.key
+*.pem
+*keystore*
+node_modules/
+.npm-cache/
+.venv/
+__pycache__/
+.pytest_cache/
+.gltest_cache/
+artifacts/
+*.raw-receipt.json

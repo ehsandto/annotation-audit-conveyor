@@ -1,0 +1,9 @@
+Fictional document-ingestion API reference, revision 1. This document is an authored software-test fixture, not a claim about a deployed service.
+
+Only authenticated callers may submit payloads. Unauthenticated callers cannot submit a payload, even if the payload is nonempty.
+
+Empty payloads are rejected, including those submitted by authenticated callers. Authenticated callers may submit nonempty UTF-8 payloads.
+
+Successful submissions return HTTP status 202 Accepted. The service does not return status 200 for a successful submission.
+
+This reference describes documented API rules only. It provides no evidence of actual service uptime or delivery.
